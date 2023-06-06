@@ -15,7 +15,7 @@ export const metadata = {
       "With a background as a fullstack developer. Lucas Norgaard builds both modern and scalable applications",
     images: [
       {
-        url: "https://image.luxass.dev/api/image?width=300&height=300&text=LN&textColor=blue-600&bgColor=white&fontSize=8",
+        url: "https://image.luxass.dev/og/text?width=300&height=300&text=LN&textColor=blue-600&bgColor=white&fontSize=8",
         width: 300,
         height: 300,
         alt: "image.luxass.dev"

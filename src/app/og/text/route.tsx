@@ -1,20 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import { ImageResponse } from "@vercel/og";
-import type { NextApiRequest, NextApiResponse } from "next";
-
-export const config = {
-  runtime: "edge"
-};
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (!req.url) {
-    return res.status(500).json({ error: "say whaaat" });
-  }
-
+export function GET(req: Request) {
+  if (!req.url) return new Response("say whaaat", { status: 500 });
   const { searchParams } = new URL(req.url, "https://luxass.dev");
   let width = Number(searchParams.get("width") || "300");
   let height = Number(searchParams.get("height") || "300");
@@ -48,3 +40,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   );
 }
+
