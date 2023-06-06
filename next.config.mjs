@@ -1,9 +1,6 @@
-/**
- * @type {import('next').NextConfig}
- */
-export default {
-  experimental: {
-    appDir: true
-  },
+/** @type {import('next').NextConfig} */
+const config = {
   swcMinify: true
 };
+
+export default config;

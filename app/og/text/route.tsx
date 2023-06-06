@@ -1,15 +1,11 @@
-/* eslint-disable react/no-unknown-property */
 import { ImageResponse } from "@vercel/og";
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
+import { clamp } from "lib/utils";
 
 export function GET(req: Request) {
   if (!req.url) return new Response("say whaaat", { status: 500 });
-  const { searchParams } = new URL(req.url, "https://luxass.dev");
-  let width = Number(searchParams.get("width") || "300");
-  let height = Number(searchParams.get("height") || "300");
+  const { searchParams } = new URL(req.url);
+  let width = Number(searchParams.get("width") || searchParams.get("w") || "300");
+  let height = Number(searchParams.get("height") || searchParams.get("h") || "300");
   const text = searchParams.get("text") || "LN";
   const textColor = searchParams.get("textColor") || "blue-600";
   const bgColor = searchParams.get("bgColor") || "white";
