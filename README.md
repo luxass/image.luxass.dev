@@ -1,3 +1,2 @@
 # image.luxass.dev
-
-This is a simple nextjs app that serves my og images.
+> Serves some of my OG-images
