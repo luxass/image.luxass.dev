@@ -2,7 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/:path((?![api|og]/).*)",
+      "source": "/:path((?!api/).*)",
+      "destination": "https://luxass.dev/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!og/).*)",
       "destination": "https://luxass.dev/:path*",
       "permanent": false
     }
