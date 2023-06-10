@@ -1,4 +1,4 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/server";
 import { clamp } from "lib/utils";
 
 export function GET(req: Request) {
