@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const config = {
-  swcMinify: true
+  swcMinify: true,
 };
 
 export default config;

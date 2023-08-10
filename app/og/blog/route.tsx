@@ -7,7 +7,6 @@ export function GET(req: Request) {
   const description = searchParams.get("description") || "No description";
   const date = searchParams.get("date") || "No date";
 
-
   return new ImageResponse(
     (
       <div tw="p-8 bg-stone-900 text-white flex w-full h-full">
@@ -23,8 +22,7 @@ export function GET(req: Request) {
     ),
     {
       width: 1200,
-      height: 630
-    }
+      height: 630,
+    },
   );
 }
-

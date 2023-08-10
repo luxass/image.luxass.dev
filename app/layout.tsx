@@ -18,14 +18,14 @@ export const metadata = {
         url: "https://image.luxass.dev/og/text",
         width: 300,
         height: 300,
-        alt: "image.luxass.dev"
-      }
-    ]
-  }
+        alt: "image.luxass.dev",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {

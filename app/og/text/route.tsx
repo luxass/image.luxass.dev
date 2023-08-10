@@ -11,11 +11,11 @@ export function GET(req: Request) {
   const bgColor = searchParams.get("bgColor") || "white";
   let fontSize = Number(searchParams.get("fontSize") || "8");
 
-  if (isNaN(fontSize)) {
+  if (Number.isNaN(fontSize)) {
     fontSize = 8;
   }
 
-  if (isNaN(width) || isNaN(height)) {
+  if (Number.isNaN(width) || Number.isNaN(height)) {
     return new Response("Invalid width or height", { status: 400 });
   }
 
@@ -32,8 +32,7 @@ export function GET(req: Request) {
     ),
     {
       width,
-      height
-    }
+      height,
+    },
   );
 }
-
