@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/server";
 
 export function GET(req: Request) {
-  if (!req.url) return new Response("say whaaat", { status: 500 });
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("title") || "No title";
   const description = searchParams.get("description") || "No description";
