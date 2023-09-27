@@ -8,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta httpEquiv="refresh" content="20; url=https://luxass.dev/" />
+        <meta httpEquiv="refresh" content="5; url=https://luxass.dev/" />
       </head>
       <body>{children}</body>
     </html>
