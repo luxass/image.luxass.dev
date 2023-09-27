@@ -28,7 +28,6 @@ export default function Home() {
         <img
           className="border"
           src={`/api/image/project?${PROJECT_PARAMS.toSearchString({
-            pkg: "@luxass/eslint-config",
             repo: "luxass/eslint-config",
             description: "A really cool eslint config",
           })}`}
