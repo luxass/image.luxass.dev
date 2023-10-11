@@ -1,3 +1,4 @@
+// next doesn't support the node: protocol yet.
 // eslint-disable-next-line unicorn/prefer-node-protocol
 import process from "process";
 import { ImageResponse } from "next/server";
