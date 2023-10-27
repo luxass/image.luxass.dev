@@ -6,7 +6,9 @@ export default function RootLayout2({
   return (
     <html lang="en">
       <head>
-        <meta httpEquiv="refresh" content="5; url=https://luxass.dev/" />
+        {process.env.NODE_ENV === "production" && (
+          <meta httpEquiv="refresh" content="5; url=https://luxass.dev/" />
+        )}
       </head>
       <body>{children}</body>
     </html>

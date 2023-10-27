@@ -36,5 +36,5 @@ export function truncateWords(str: string, maxCharacters: number) {
   // break at closest word
   const truncated = str.slice(0, maxCharacters);
   const lastSpace = truncated.lastIndexOf(" ");
-  return `${truncated.slice(0, lastSpace)} …`;
+  return `${truncated.slice(0, lastSpace)}…`;
 }
