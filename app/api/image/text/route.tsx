@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import { TEXT_PARAMS } from "./params";
 import { font } from "~/lib/font";
 
