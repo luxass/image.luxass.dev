@@ -32,7 +32,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="prose flex-1 p-4">
+    <main className="flex-1 p-4 flex items-center justify-center">
       <Link href="https://luxass.dev">have a good day 🩵</Link>
     </main>
   );

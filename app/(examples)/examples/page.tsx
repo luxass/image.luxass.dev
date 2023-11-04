@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { POST_PARAMS } from "~/app/api/image/post/params";
 import { PROJECT_PARAMS } from "~/app/api/image/project/params";
 import { TEXT_PARAMS } from "~/app/api/image/text/params";
@@ -11,7 +12,7 @@ export default function Home() {
     <main className="prose flex-1 p-4">
       <div>
         <h2>Post</h2>
-        <img
+        <Image
           className="border"
           src={`/api/image/post?${POST_PARAMS.toSearchString({
             date: "2023-09-27",
@@ -20,23 +21,29 @@ export default function Home() {
             description:
               "Did that work, or do i need to test description too?",
           })}`}
+          alt="OG Image of a Post"
+          width="1200"
+          height="600"
         />
       </div>
 
       <div>
         <h2>Project</h2>
-        <img
+        <Image
           className="border"
           src={`/api/image/project?${PROJECT_PARAMS.toSearchString({
             repo: "luxass/eslint-config",
             description: "A really cool eslint config",
           })}`}
+          alt="OG Image of a Project"
+          width="1200"
+          height="600"
         />
       </div>
 
       <div>
         <h2>Text</h2>
-        <img
+        <Image
           className="border"
           src={`/api/image/text?${TEXT_PARAMS.toSearchString({
             bgColor: "stone-900",
@@ -46,6 +53,9 @@ export default function Home() {
             textColor: "white",
             width: 300,
           })}`}
+          alt="OG Image of Text"
+          width="300"
+          height="300"
         />
       </div>
     </main>
