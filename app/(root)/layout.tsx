@@ -1,4 +1,7 @@
-export default function RootLayout2({
+// eslint-disable-next-line unicorn/prefer-node-protocol
+import process from "process";
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
