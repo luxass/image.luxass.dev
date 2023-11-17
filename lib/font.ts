@@ -12,6 +12,11 @@ export async function font(family: string, weight?: number, text?: string) {
       family,
       weight,
       text,
-    })}`);
+    })}`, {
+      next: {
+        revalidate: 60 * 60 * 24 * 30 // 30 days
+      }
+    });
+
   return await res.arrayBuffer();
 }
