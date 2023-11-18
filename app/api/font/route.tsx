@@ -36,7 +36,9 @@ export async function GET(req: Request) {
     /src: url\((.+)\) format\('(opentype|truetype)'\)/,
   );
 
-  if (!resource || !resource[1]) return;
+  if (!resource || !resource[1]) {
+    return;
+  }
 
   const res = await fetch(resource[1]);
 

@@ -1,5 +1,3 @@
-// next doesn't support the node: protocol yet.
-// eslint-disable-next-line unicorn/prefer-node-protocol
 import process from "process";
 import { ImageResponse } from "next/og";
 import { PROJECT_PARAMS } from "./params";
@@ -36,10 +34,10 @@ export async function GET(req: Request) {
 
   return new ImageResponse(
     <div
-      tw="bg-neutral-900 h-full w-full text-white bg-cover flex flex-col p-14"
+      tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white"
       style={{ fontFamily: "Inter" }}
     >
-      <div tw="flex flex-col justify-center gap-y-6 items-center w-full h-full">
+      <div tw="flex h-full w-full flex-col items-center justify-center gap-y-6">
         <div tw="flex items-center">
           <img
             src="https://assets.luxass.dev/logos/dino.svg"
@@ -47,20 +45,20 @@ export async function GET(req: Request) {
             height="128px"
             alt="luxass logo"
           />
-          <h1 tw="text-6xl ml-8 font-extrabold">{props.repo}</h1>
+          <h1 tw="ml-8 text-6xl font-extrabold">{props.repo}</h1>
         </div>
         <div tw="flex flex-col items-center">
-          <p tw="text-center pt-6 text-6xl font-extrabold">
+          <p tw="pt-6 text-center text-6xl font-extrabold">
             {props.description}
           </p>
         </div>
-        <div tw="flex items-center text-neutral-300 my-8">
-          <div tw="flex items-center mx-8">
-            <div tw="flex items-center mx-8">
+        <div tw="my-8 flex items-center text-neutral-300">
+          <div tw="mx-8 flex items-center">
+            <div tw="mx-8 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 16 16">
                 <path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815l4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97l.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45l2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084l2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456l-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183l-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z" />
               </svg>
-              <p tw="text-3xl font-bold ml-2">{stars}</p>
+              <p tw="ml-2 text-3xl font-bold">{stars}</p>
             </div>
           </div>
         </div>

@@ -19,13 +19,13 @@ export async function GET(req: Request) {
   const props = parsed.data.input;
   return new ImageResponse(
     (
-      <div tw="bg-neutral-900 h-full w-full text-white bg-cover flex flex-col p-14">
-        <div tw="flex flex-col justify-between w-full h-full">
-          <div tw="flex flex-col w-full">
-            <div tw="flex justify-between items-center w-full">
-              <div tw="flex flex-col flex-1 pr-6">
-                <p tw="text-blue-500 text-2xl font-semibold">{props.date}</p>
-                <h1 tw="text-6xl font-extrabold leading-tight py-0 my-0">
+      <div tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white">
+        <div tw="flex h-full w-full flex-col justify-between">
+          <div tw="flex w-full flex-col">
+            <div tw="flex w-full items-center justify-between">
+              <div tw="flex flex-1 flex-col pr-6">
+                <p tw="text-2xl font-semibold text-blue-500">{props.date}</p>
+                <h1 tw="my-0 py-0 text-6xl font-extrabold leading-tight">
                   {props.title}
                 </h1>
               </div>
@@ -41,7 +41,7 @@ export async function GET(req: Request) {
               tw="mr-6 rounded-xl"
             />
             <div tw="flex flex-col justify-center">
-              <p tw="text-2xl leading-[1px] font-semibold">
+              <p tw="text-2xl font-semibold leading-[1px]">
                 luxass.dev
               </p>
             </div>

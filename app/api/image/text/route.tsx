@@ -27,7 +27,8 @@ export async function GET(req: Request) {
   return new ImageResponse(
     (
       <div
-        tw={`flex items-center justify-center text-center w-screen h-screen p-5 bg-${bgColor}`}>
+        tw={`bg-${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
+      >
         <p tw={`text-[${props.fontSize}rem] text-${textColor}`}>{text}</p>
       </div>
     ),
