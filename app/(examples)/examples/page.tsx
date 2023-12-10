@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { POST_PARAMS } from "~/app/api/image/post/params";
 import { PROJECT_PARAMS } from "~/app/api/image/project/params";
+import { RANDOM_EMOJI_PARAMS } from "~/app/api/image/random-emoji/params";
 import { TEXT_PARAMS } from "~/app/api/image/text/params";
 
 export interface Props { }
@@ -54,6 +55,22 @@ export default function Home() {
             width: 300,
           })}`}
           alt="OG Image of Text"
+          width="300"
+          height="300"
+        />
+      </div>
+
+      <div>
+        <h2>Random Emoji</h2>
+        <Image
+          className="border"
+          src={`/api/image/random-emoji?${RANDOM_EMOJI_PARAMS.toSearchString({
+            bgColor: "stone-900",
+            fontSize: 4,
+            height: 300,
+            width: 300,
+          })}`}
+          alt="A random emoji"
           width="300"
           height="300"
         />
