@@ -14,6 +14,7 @@ export default function Home() {
       <div>
         <h2>Post</h2>
         <Image
+          priority
           className="border"
           src={`/api/image/post?${POST_PARAMS.toSearchString({
             date: "2023-09-27",
@@ -31,6 +32,7 @@ export default function Home() {
       <div>
         <h2>Project</h2>
         <Image
+          priority
           className="border"
           src={`/api/image/project?${PROJECT_PARAMS.toSearchString({
             repo: "luxass/eslint-config",
@@ -45,34 +47,34 @@ export default function Home() {
       <div>
         <h2>Text</h2>
         <Image
+          priority
           className="border"
           src={`/api/image/text?${TEXT_PARAMS.toSearchString({
             bgColor: "stone-900",
-            fontSize: 4,
-            height: 300,
+            height: 600,
             text: "Hello World",
             textColor: "white",
-            width: 300,
+            width: 600,
           })}`}
           alt="OG Image of Text"
-          width="300"
-          height="300"
+          width="600"
+          height="600"
         />
       </div>
 
       <div>
         <h2>Random Emoji</h2>
         <Image
+          priority
           className="border"
           src={`/api/image/random-emoji?${RANDOM_EMOJI_PARAMS.toSearchString({
             bgColor: "stone-900",
-            fontSize: 4,
-            height: 300,
-            width: 300,
+            height: 600,
+            width: 600,
           })}`}
           alt="A random emoji"
-          width="300"
-          height="300"
+          width="600"
+          height="600"
         />
       </div>
     </main>

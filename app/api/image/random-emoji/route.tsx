@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 import { RANDOM_EMOJI_PARAMS } from "./params";
-import { font } from "~/lib/font";
 
 export const runtime = "edge";
 
@@ -14,8 +13,6 @@ export async function GET(req: Request) {
     "😊",
     "🚀",
     "⭐",
-    "💻",
-    "🌐",
     "🔧",
     "🎉",
     "🔍",
@@ -28,7 +25,6 @@ export async function GET(req: Request) {
     "💡",
     "👍",
     "🌍",
-    "📱",
     "💡",
     "🤖",
   ];
@@ -41,24 +37,24 @@ export async function GET(req: Request) {
     height,
     width,
   } = props;
-  const [inter400] = await Promise.all([
-    font("Inter", 400),
-  ]);
+
+  const bg = `bg-${bgColor}`;
 
   return new ImageResponse(
     (
       <div
-        tw={`bg-${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
+        tw={`${bg} flex h-screen w-screen items-center justify-center p-5 text-center`}
       >
-        <p tw={`text-[${props.fontSize}rem]`}>{text}</p>
+        <p
+          tw="text-[12rem]"
+        >
+          {text}
+        </p>
       </div>
     ),
     {
       width,
       height,
-      fonts: [
-        { name: "Inter", data: inter400, weight: 400 },
-      ],
     },
   );
 }
