@@ -26,6 +26,7 @@ export function params<TType>(schema: z.ZodType<TType>) {
       schema.parse(obj);
       return `input=${encodeURIComponent(JSON.stringify(obj))}`;
     },
+    schema,
   };
 }
 

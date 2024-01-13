@@ -1,24 +1,34 @@
 import Link from "next/link";
 import type { Metadata } from "next/types";
 
-export interface Props {}
+export interface Props { }
 
 export const runtime = "edge";
 
 export const metadata = {
   metadataBase: new URL("https://luxass.dev/"),
   title: "home | image.luxass.dev",
-  description:
-     "With a background as a fullstack developer. Lucas Nørgård builds both modern and scalable applications",
-  keywords:
-      "lucas nørgård, web developer, fullstack, backend, website, lucas, luxass, nørgård",
+  description: "open graph image generator for luxass.dev",
+  keywords: [
+    "lucas nørgård",
+    "luxass",
+    "nørgård",
+    "lucas",
+    "fullstack",
+    "backend",
+    "frontend",
+    "web developer",
+    "website",
+    "Web",
+    "open graph",
+    "og",
+  ],
   openGraph: {
     type: "website",
     siteName: "luxass.dev",
     url: "https://luxass.dev/",
     title: "home | image.luxass.dev",
-    description:
-        "With a background as a fullstack developer. Lucas Norgaard builds both modern and scalable applications",
+    description: "open graph image generator for luxass.dev",
     images: [
       {
         url: "https://image.luxass.dev/api/image/text",
