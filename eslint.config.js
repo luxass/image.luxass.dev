@@ -6,5 +6,5 @@ import {
 export default luxass({
   nextjs: true,
   formatters: true,
-  tailwindcss: true
+  tailwindcss: true,
 });
