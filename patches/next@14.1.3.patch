@@ -1,0 +1,181 @@
+diff --git a/dist/lib/eslint/runLintCheck.js b/dist/lib/eslint/runLintCheck.js
+index 080bd27878721805f16d104255ba4a8b1a9a1410..91777fc06b48135476f344346a33597a94d6af4e 100644
+--- a/dist/lib/eslint/runLintCheck.js
++++ b/dist/lib/eslint/runLintCheck.js
+@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
+ });
+ Object.defineProperty(exports, "runLintCheck", {
+     enumerable: true,
+-    get: function() {
++    get: function () {
+         return runLintCheck;
+     }
+ });
+@@ -34,7 +34,7 @@ function _getRequireWildcardCache(nodeInterop) {
+     if (typeof WeakMap !== "function") return null;
+     var cacheBabelInterop = new WeakMap();
+     var cacheNodeInterop = new WeakMap();
+-    return (_getRequireWildcardCache = function(nodeInterop) {
++    return (_getRequireWildcardCache = function (nodeInterop) {
+         return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+     })(nodeInterop);
+ }
+@@ -53,7 +53,7 @@ function _interop_require_wildcard(obj, nodeInterop) {
+     }
+     var newObj = {};
+     var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+-    for(var key in obj){
++    for (var key in obj) {
+         if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
+             var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+             if (desc && (desc.get || desc.set)) {
+@@ -96,7 +96,7 @@ async function cliPrompt() {
+         const cliSelect = (await Promise.resolve(require("next/dist/compiled/cli-select"))).default;
+         const { value } = await cliSelect({
+             values: _constants.ESLINT_PROMPT_VALUES,
+-            valueRenderer: ({ title, recommended }, selected)=>{
++            valueRenderer: ({ title, recommended }, selected) => {
+                 const name = selected ? (0, _picocolors.bold)((0, _picocolors.underline)((0, _picocolors.cyan)(title))) : title;
+                 return name + (recommended ? (0, _picocolors.bold)((0, _picocolors.yellow)(" (recommended)")) : "");
+             },
+@@ -106,7 +106,7 @@ async function cliPrompt() {
+         return {
+             config: (value == null ? void 0 : value.config) ?? null
+         };
+-    } catch  {
++    } catch {
+         return {
+             config: null
+         };
+@@ -118,28 +118,47 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, { lintDuringBu
+         // Load ESLint after we're sure it exists:
+         const deps = await (0, _hasnecessarydependencies.hasNecessaryDependencies)(baseDir, requiredPackages);
+         const packageManager = (0, _getpkgmanager.getPkgManager)(baseDir);
+-        if (deps.missing.some((dep)=>dep.pkg === "eslint")) {
++        if (deps.missing.some((dep) => dep.pkg === "eslint")) {
+             _log.error(`ESLint must be installed${lintDuringBuild ? " in order to run during builds:" : ":"} ${(0, _picocolors.bold)((0, _picocolors.cyan)((packageManager === "yarn" ? "yarn add --dev" : packageManager === "pnpm" ? "pnpm install --save-dev" : "npm install --save-dev") + " eslint"))}`);
+             return null;
+         }
+-        const mod = await Promise.resolve(require(deps.resolved.get("eslint")));
+-        const { ESLint } = mod;
++        const modPath = deps.resolved.get('eslint')
++        const unsupportedApiPath = _path.default.resolve(
++            _path.default.dirname(modPath),
++            './unsupported-api.js'
++        )
++
++        const mod = await Promise.resolve(require(modPath))
++        const unsupportedApi = await new Promise((resolve) => {
++            try {
++                resolve(require(unsupportedApiPath))
++            } catch (err) {
++                resolve(null)
++            }
++        })
++
++        let { ESLint } = mod
++        let shouldUseFlatConfig = false
++        if (unsupportedApi) {
++            shouldUseFlatConfig = await unsupportedApi.shouldUseFlatConfig?.()
++            if (shouldUseFlatConfig) {
++                ESLint = unsupportedApi.FlatESLint
++            }
++        }
++
+         let eslintVersion = (ESLint == null ? void 0 : ESLint.version) ?? ((_mod_CLIEngine = mod.CLIEngine) == null ? void 0 : _mod_CLIEngine.version);
+         if (!eslintVersion || _semver.default.lt(eslintVersion, "7.0.0")) {
+             return `${(0, _picocolors.red)("error")} - Your project has an older version of ESLint installed${eslintVersion ? " (" + eslintVersion + ")" : ""}. Please upgrade to ESLint version 7 or above`;
+         }
+         let options = {
+-            useEslintrc: true,
+             baseConfig: {},
+-            errorOnUnmatchedPattern: false,
+-            extensions: [
+-                ".js",
+-                ".jsx",
+-                ".ts",
+-                ".tsx"
+-            ],
+-            cache: true,
+-            ...eslintOptions
++            ...(!shouldUseFlatConfig ? {
++                useEslintrc: true,
++                errorOnUnmatchedPattern: false,
++                extensions: ['.js', '.jsx', '.ts', '.tsx'],
++                cache: true,
++                ...eslintOptions,
++            } : {})
+         };
+         let eslint = new ESLint(options);
+         let nextEslintPluginIsEnabled = false;
+@@ -147,13 +166,13 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, { lintDuringBu
+         for (const configFile of [
+             eslintrcFile,
+             pkgJsonPath
+-        ]){
++        ]) {
+             var _completeConfig_plugins;
+-            if (!configFile) continue;
++            if (!configFile || shouldUseFlatConfig) continue;
+             const completeConfig = await eslint.calculateConfigForFile(configFile);
+             if ((_completeConfig_plugins = completeConfig.plugins) == null ? void 0 : _completeConfig_plugins.includes("@next/next")) {
+                 nextEslintPluginIsEnabled = true;
+-                for (const [name, [severity]] of Object.entries(completeConfig.rules)){
++                for (const [name, [severity]] of Object.entries(completeConfig.rules)) {
+                     if (!name.startsWith("@next/next/")) {
+                         continue;
+                     }
+@@ -172,7 +191,7 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, { lintDuringBu
+         ] : [];
+         if (nextEslintPluginIsEnabled) {
+             let updatedPagesDir = false;
+-            for (const rule of pagesDirRules){
++            for (const rule of pagesDirRules) {
+                 var _options_baseConfig_rules, _options_baseConfig_rules1;
+                 if (!((_options_baseConfig_rules = options.baseConfig.rules) == null ? void 0 : _options_baseConfig_rules[rule]) && !((_options_baseConfig_rules1 = options.baseConfig.rules) == null ? void 0 : _options_baseConfig_rules1[rule.replace("@next/next", "@next/babel-plugin-next")])) {
+                     if (!options.baseConfig.rules) {
+@@ -189,19 +208,21 @@ async function lint(baseDir, lintDirs, eslintrcFile, pkgJsonPath, { lintDuringBu
+                 eslint = new ESLint(options);
+             }
+         } else {
+-            _log.warn("");
+-            _log.warn("The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/basic-features/eslint#migrating-existing-config");
++            if (!shouldUseFlatConfig) {
++                _log.warn("");
++                _log.warn("The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/basic-features/eslint#migrating-existing-config");
++            }
+         }
+         const lintStart = process.hrtime();
+         let results = await eslint.lintFiles(lintDirs);
+         let selectedFormatter = null;
+         if (options.fix) await ESLint.outputFixes(results);
+         if (reportErrorsOnly) results = await ESLint.getErrorResults(results) // Only return errors if --quiet flag is used
+-        ;
++            ;
+         if (formatter) selectedFormatter = await eslint.loadFormatter(formatter);
+         const formattedResult = (0, _customFormatter.formatResults)(baseDir, results, selectedFormatter == null ? void 0 : selectedFormatter.format);
+         const lintEnd = process.hrtime(lintStart);
+-        const totalWarnings = results.reduce((sum, file)=>sum + file.warningCount, 0);
++        const totalWarnings = results.reduce((sum, file) => sum + file.warningCount, 0);
+         if (outputFile) await (0, _writeOutputFile.writeOutputFile)(outputFile, formattedResult.output);
+         return {
+             output: formattedResult.outputWithMessages,
+@@ -237,7 +258,8 @@ async function runLintCheck(baseDir, lintDirs, opts) {
+             ".eslintrc.yaml",
+             ".eslintrc.yml",
+             ".eslintrc.json",
+-            ".eslintrc"
++            ".eslintrc",
++            "eslint.config.js"
+         ], {
+             cwd: baseDir
+         }) ?? null;
+@@ -274,7 +296,7 @@ async function runLintCheck(baseDir, lintDirs, opts) {
+                 return null;
+             } else {
+                 // Ask user what config they would like to start with for first time "next lint" setup
+-                const { config: selectedConfig } = strict ? _constants.ESLINT_PROMPT_VALUES.find((opt)=>opt.title === "Strict") : await cliPrompt();
++                const { config: selectedConfig } = strict ? _constants.ESLINT_PROMPT_VALUES.find((opt) => opt.title === "Strict") : await cliPrompt();
+                 if (selectedConfig == null) {
+                     // Show a warning if no option is selected in prompt
+                     _log.warn("If you set up ESLint yourself, we recommend adding the Next.js ESLint plugin. See https://nextjs.org/docs/basic-features/eslint#migrating-existing-config");
