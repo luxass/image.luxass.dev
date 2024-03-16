@@ -1,41 +1,41 @@
-import process from "process";
-import { ImageResponse } from "next/og";
-import { PROJECT_PARAMS } from "./params";
-import { font } from "~/lib/font";
+import process from 'process'
+import { ImageResponse } from 'next/og'
+import { PROJECT_PARAMS } from './params'
+import { font } from '~/lib/font'
 
-export const runtime = "edge";
+export const runtime = 'edge'
 
 async function getStars(repo: `${string}/${string}`) {
   const data = await (
     await fetch(`https://api.github.com/repos/${repo}`, {
       headers: { authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
     })
-  ).json();
-  if (typeof data?.stargazers_count !== "number") {
-    throw new TypeError("Could not fetch stars");
+  ).json()
+  if (typeof data?.stargazers_count !== 'number') {
+    throw new TypeError('Could not fetch stars')
   }
-  return new Intl.NumberFormat().format(data.stargazers_count);
+  return new Intl.NumberFormat().format(data.stargazers_count)
 }
 
 export async function GET(req: Request) {
-  const parsed = PROJECT_PARAMS.decodeRequest(req);
+  const parsed = PROJECT_PARAMS.decodeRequest(req)
   if (!parsed.success) {
-    return new Response(parsed.error.toString(), { status: 400 });
+    return new Response(parsed.error.toString(), { status: 400 })
   }
 
-  const props = parsed.data.input;
+  const props = parsed.data.input
 
   const [inter900, inter700, inter400, stars] = await Promise.all([
-    font("Inter", 900),
-    font("Inter", 700),
-    font("Inter", 400),
+    font('Inter', 900),
+    font('Inter', 700),
+    font('Inter', 400),
     getStars(props.repo),
-  ]);
+  ])
 
   return new ImageResponse(
     <div
       tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white"
-      style={{ fontFamily: "Inter" }}
+      style={{ fontFamily: 'Inter' }}
     >
       <div tw="flex h-full w-full flex-col items-center justify-center gap-y-6">
         <div tw="flex items-center">
@@ -66,15 +66,15 @@ export async function GET(req: Request) {
     </div>,
     {
       headers: {
-        "Cache-Control": "s-maxage=86400, stale-while-revalidate",
+        'Cache-Control': 's-maxage=86400, stale-while-revalidate',
       },
       width: 1200,
       height: 600,
       fonts: [
-        { name: "Inter", data: inter900, weight: 900 },
-        { name: "Inter", data: inter700, weight: 700 },
-        { name: "Inter", data: inter400, weight: 400 },
+        { name: 'Inter', data: inter900, weight: 900 },
+        { name: 'Inter', data: inter700, weight: 700 },
+        { name: 'Inter', data: inter400, weight: 400 },
       ],
     },
-  );
+  )
 }

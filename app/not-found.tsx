@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
@@ -7,5 +7,5 @@ export default function NotFound() {
       <p className="mb-8 !text-2xl">Page not found</p>
       <Link href="/">Go back</Link>
     </main>
-  );
+  )
 }

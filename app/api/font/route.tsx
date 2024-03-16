@@ -2,51 +2,51 @@
  * Originally from Vercel's Satori project.
  * @link https://github.com/vercel/satori/blob/main/playground/pages/api/font.ts
  */
-import { FONT_PARAMS } from "./params";
+import { FONT_PARAMS } from './params'
 
-export const runtime = "edge";
+export const runtime = 'edge'
 
 export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const parsed = FONT_PARAMS.decodeRequest(req);
+  const url = new URL(req.url)
+  const parsed = FONT_PARAMS.decodeRequest(req)
 
   if (!parsed.success) {
-    return new Response(parsed.error.toString(), { status: 400 });
+    return new Response(parsed.error.toString(), { status: 400 })
   }
 
-  const props = parsed.data.input;
+  const props = parsed.data.input
 
-  let API = `https://fonts.googleapis.com/css2?family=${props.family}:wght@${props.weight}`;
+  let API = `https://fonts.googleapis.com/css2?family=${props.family}:wght@${props.weight}`
   if (props.text) {
     // allow font optimization if we pass text => only getting the characters we need
-    API += `&text=${encodeURIComponent(props.text)}`;
+    API += `&text=${encodeURIComponent(props.text)}`
   }
 
   const css = await (
     await fetch(API, {
       headers: {
         // Make sure it returns TTF.
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
+        'User-Agent':
+          'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1',
       },
     })
-  ).text();
+  ).text()
 
   const resource = css.match(
     /src: url\((.+)\) format\('(opentype|truetype)'\)/,
-  );
+  )
 
   if (!resource || !resource[1]) {
-    return;
+    return
   }
 
-  const res = await fetch(resource[1]);
+  const res = await fetch(resource[1])
 
   // Make sure not to mess it around with compression when developing it locally.
-  if (url.hostname === "localhost") {
-    res.headers.delete("content-encoding");
-    res.headers.delete("content-length");
+  if (url.hostname === 'localhost') {
+    res.headers.delete('content-encoding')
+    res.headers.delete('content-length')
   }
 
-  return res;
+  return res
 }

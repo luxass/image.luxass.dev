@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { params } from "~/lib/utils";
+import { z } from 'zod'
+import { params } from '~/lib/utils'
 
 export const FONT_PARAMS = params(
   z.object({
@@ -7,4 +7,4 @@ export const FONT_PARAMS = params(
     weight: z.number().default(400),
     text: z.string().optional(),
   }),
-);
+)

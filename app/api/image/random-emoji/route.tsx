@@ -1,44 +1,44 @@
-import { ImageResponse } from "next/og";
-import { RANDOM_EMOJI_PARAMS } from "./params";
+import { ImageResponse } from 'next/og'
+import { RANDOM_EMOJI_PARAMS } from './params'
 
-export const runtime = "edge";
+export const runtime = 'edge'
 
 export async function GET(req: Request) {
-  const parsed = RANDOM_EMOJI_PARAMS.decodeRequest(req);
+  const parsed = RANDOM_EMOJI_PARAMS.decodeRequest(req)
   if (!parsed.success) {
-    return new Response(parsed.error.toString(), { status: 400 });
+    return new Response(parsed.error.toString(), { status: 400 })
   }
 
   const EMOJIS = [
-    "😊",
-    "🚀",
-    "⭐",
-    "🔧",
-    "🎉",
-    "🔍",
-    "📚",
-    "🔥",
-    "👨‍💻",
-    "🔄",
-    "🚦",
-    "🤔",
-    "💡",
-    "👍",
-    "🌍",
-    "💡",
-    "🤖",
-  ];
+    '😊',
+    '🚀',
+    '⭐',
+    '🔧',
+    '🎉',
+    '🔍',
+    '📚',
+    '🔥',
+    '👨‍💻',
+    '🔄',
+    '🚦',
+    '🤔',
+    '💡',
+    '👍',
+    '🌍',
+    '💡',
+    '🤖',
+  ]
 
-  const text = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+  const text = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
 
-  const props = parsed.data.input;
+  const props = parsed.data.input
   const {
     bgColor,
     height,
     width,
-  } = props;
+  } = props
 
-  const bg = `bg-${bgColor}`;
+  const bg = `bg-${bgColor}`
 
   return new ImageResponse(
     (
@@ -56,5 +56,5 @@ export async function GET(req: Request) {
       width,
       height,
     },
-  );
+  )
 }
