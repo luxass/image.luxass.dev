@@ -1,12 +1,18 @@
 name = "image-service"
 main = "src/index.ts"
 compatibility_date = "2023-08-20"
-rules = [ { type = "Text", globs = [ "**/*.html" ], fallthrough = true } ]
+rules = [{ type = "Text", globs = ["**/*.html"], fallthrough = true }]
 
 [env.staging]
-vars = { ENVIRONMENT = "staging", HOST = "https://staging.image.luxass.dev" }
-routes = [ { pattern = "staging.image.luxass.dev", custom_domain = true } ]
+vars = { ENVIRONMENT = "staging" }
+routes = [
+  { pattern = "staging.image.luxass.dev", custom_domain = true },
+  { pattern = "staging.image.luxass.com", custom_domain = true },
+]
 
 [env.production]
-vars = { ENVIRONMENT = "production", HOST = "https://image.luxass.dev" }
-routes = [ { pattern = "image.luxass.dev", custom_domain = true } ]
+vars = { ENVIRONMENT = "production" }
+routes = [
+  { pattern = "image.luxass.dev", custom_domain = true },
+  { pattern = "image.luxass.com", custom_domain = true },
+]
