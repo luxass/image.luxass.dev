@@ -18,8 +18,11 @@ imageRouter.get(
 
     const response = await cache.match(key)
     if (!response) {
+      // eslint-disable-next-line no-console
+      console.info('serving image from network')
       await next()
       if (!ctx.res.ok) {
+        console.error('failed to fetch image, skipping caching')
         return
       }
 
@@ -28,6 +31,8 @@ imageRouter.get(
       const response = ctx.res.clone()
       ctx.executionCtx.waitUntil(cache.put(key, response))
     } else {
+      // eslint-disable-next-line no-console
+      console.info('serving image from cache')
       return new Response(response.body, response)
     }
   },

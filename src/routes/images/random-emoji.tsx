@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font } from '../../utils'
 
 export const randomEmojiImageRouter = new Hono<HonoContext>()

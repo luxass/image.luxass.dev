@@ -5,8 +5,14 @@ rules = [ { type = "Text", globs = [ "**/*.html" ], fallthrough = true } ]
 
 [env.staging]
 vars = { ENVIRONMENT = "staging" }
-routes = [ { pattern = "staging.image.luxass.dev", custom_domain = true } ]
+routes = [
+  { pattern = "staging.image.luxass.dev", custom_domain = true },
+  { pattern = "staging.image.luxass.com", custom_domain = true },
+]
 
 [env.production]
 vars = { ENVIRONMENT = "production" }
-routes = [ { pattern = "image.luxass.dev", custom_domain = true } ]
+routes = [
+  { pattern = "image.luxass.dev", custom_domain = true },
+  { pattern = "image.luxass.com", custom_domain = true },
+]

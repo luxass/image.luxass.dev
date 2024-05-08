@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font, truncateWords } from '../../utils'
 
 export const postImageRouter = new Hono<HonoContext>()

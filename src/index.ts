@@ -5,14 +5,12 @@ import { HTTPException } from 'hono/http-exception'
 import type { HonoContext } from './types'
 // @ts-expect-error no types for html files
 import indexPage from './assets/index.html'
-import { fontRouter } from './routes/font'
 import { imageRouter } from './routes/images'
 
 const app = new Hono<HonoContext>()
 app.use('*', logger())
 app.use(prettyJSON())
 
-app.route('/api/font', fontRouter)
 app.route('/api/image', imageRouter)
 
 app.get('/', async (ctx) => {

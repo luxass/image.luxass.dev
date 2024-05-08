@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font } from '../../utils'
 
 export const textImageRouter = new Hono<HonoContext>()
@@ -12,7 +12,7 @@ const schema = z.object({
   width: z.number().min(300).max(600).default(300),
   height: z.number().min(300).max(600).default(300),
   text: z.string().default('LN'),
-  textColor: z.string().default('#4169e1'),
+  textColor: z.string().default('blue-600'),
   bgColor: z.string().default('white'),
 })
 
