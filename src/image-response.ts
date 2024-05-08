@@ -1,5 +1,5 @@
 import { render } from './render'
-import type { HonoContext, ImageResponseOptions } from './types'
+import type { ImageResponseOptions } from './types'
 
 export class ImageResponse extends Response {
   constructor(

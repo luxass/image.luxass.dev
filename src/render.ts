@@ -5,7 +5,7 @@ import { Resvg, initWasm } from '@resvg/resvg-wasm'
 import resvgWasm from './resvg.wasm'
 // @ts-expect-error .wasm files are not typed
 import yogaWasm from './yoga.wasm'
-import type { HonoContext, ImageResponseOptions } from './types'
+import type { ImageResponseOptions } from './types'
 import { font } from './utils'
 
 async function initResvgWasm() {
