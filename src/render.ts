@@ -148,6 +148,8 @@ export async function render({ env, element, options }: RenderOptions) {
         return `data:image/svg+xml;base64,${btoa(await (await loadEmoji(getIconCode(segment), 'twemoji')).text())}`
       }
 
+      console.error('Unsupported language code', languageCode, segment)
+
       throw new Error('Unsupported language code')
     },
   })
