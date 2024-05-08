@@ -70,11 +70,10 @@ fontRouter.get('/:family/:weight/:text?', async (ctx) => {
   const data = new DataView(await t.arrayBuffer())
   console.error(data.byteLength)
 
-  const response = new Response(
-    // @ts-expect-error it is a readable stream, but i think we have a wrongly typed dependency
-    res.body,
-    res,
-  )
+  const arrayBuffer = await res.arrayBuffer()
+  const body = new Uint8Array(arrayBuffer)
+
+  const response = new Response(body, res)
 
   if (url.hostname === 'localhost') {
     response.headers.delete('content-encoding')
