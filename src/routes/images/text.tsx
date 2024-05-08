@@ -34,35 +34,43 @@ textImageRouter.get(
       width,
     } = ctx.req.valid('query')
 
-    const inter400 = await font({
-      family: 'Inter',
-      weight: 400,
-      HOST: ctx.env.HOST,
-    })
+    try {
+      const inter400 = await font({
+        family: 'Inter',
+        weight: 400,
+        HOST: ctx.env.HOST,
+      })
 
-    const bgColor = `bg-${_bgColor}`
-    const textColor = `text-${_textColor}`
+      console.error('font is downloaded')
 
-    return new ImageResponse(
-      ctx.env,
-      <div
-        tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
-        style={{ fontFamily: 'Inter' }}
-      >
-        <p tw={`text-[12rem] ${textColor}`}>{text}</p>
-      </div>,
-      {
-        width,
-        height,
-        format: 'svg',
-        fonts: [
-          {
-            name: 'Inter',
-            weight: 400,
-            data: inter400,
-          },
-        ],
-      },
-    )
+      const bgColor = `bg-${_bgColor}`
+      const textColor = `text-${_textColor}`
+
+      return new ImageResponse(
+        ctx.env,
+        <div
+          tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
+          style={{ fontFamily: 'Inter' }}
+        >
+          <p tw={`text-[12rem] ${textColor}`}>{text}</p>
+        </div>,
+        {
+          width,
+          height,
+          format: 'svg',
+          fonts: [
+            {
+              name: 'Inter',
+              weight: 400,
+              data: inter400,
+            },
+          ],
+        },
+      )
+    } catch (error) {
+      console.error(error)
+      // @ts-expect-error ads
+      return ctx.body(error.toString(), 500)
+    }
   },
 )
