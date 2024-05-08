@@ -14,8 +14,11 @@ fontRouter.get(
 
     const response = await cache.match(key)
     if (!response) {
+      // eslint-disable-next-line no-console
+      console.info('serving font from network')
       await next()
       if (!ctx.res.ok) {
+        console.error('failed to fetch font, skipping caching')
         return
       }
 
