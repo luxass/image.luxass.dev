@@ -81,13 +81,16 @@ function getIconCode(char: string) {
 }
 
 function toCodePoint(unicodeSurrogates: string) {
-  const r = []; let c = 0; let p = 0; let i = 0
+  const r = []
+  let c = 0
+  let p = 0
+  let i = 0
   while (i < unicodeSurrogates.length) {
     c = unicodeSurrogates.charCodeAt(i++)
     if (p) {
       r.push((65536 + (p - 55296 << 10) + (c - 56320)).toString(16))
       p = 0
-    // eslint-disable-next-line yoda
+      // eslint-disable-next-line yoda
     } else if (55296 <= c && c <= 56319) {
       p = c
     } else {
