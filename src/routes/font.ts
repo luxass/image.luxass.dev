@@ -65,6 +65,10 @@ fontRouter.get('/:family/:weight/:text?', async (ctx) => {
   }
 
   const res = await fetch(resource[1])
+  const t = res.clone()
+
+  const data = new DataView(await t.arrayBuffer())
+  console.error(data.byteLength)
 
   const response = new Response(
     // @ts-expect-error it is a readable stream, but i think we have a wrongly typed dependency
