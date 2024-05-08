@@ -4,9 +4,9 @@ compatibility_date = "2023-08-20"
 rules = [ { type = "Text", globs = [ "**/*.html" ], fallthrough = true } ]
 
 [env.staging]
-vars = { ENVIRONMENT = "staging" }
+vars = { ENVIRONMENT = "staging", HOST = "https://staging.image.luxass.dev" }
 routes = [ { pattern = "staging.image.luxass.dev", custom_domain = true } ]
 
 [env.production]
-vars = { ENVIRONMENT = "production" }
+vars = { ENVIRONMENT = "production", HOST = "https://image.luxass.dev" }
 routes = [ { pattern = "image.luxass.dev", custom_domain = true } ]
