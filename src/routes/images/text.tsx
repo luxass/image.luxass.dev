@@ -42,25 +42,30 @@ textImageRouter.get(
     const bgColor = `bg-${_bgColor}`
     const textColor = `text-${_textColor}`
 
-    return new ImageResponse(
-      <div
-        tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
-        style={{ fontFamily: 'Inter' }}
-      >
-        <p tw={`text-[12rem] ${textColor}`}>{text}</p>
-      </div>,
-      {
-        width,
-        height,
-        format: 'svg',
-        fonts: [
-          {
-            name: 'Inter',
-            weight: 400,
-            data: inter400,
-          },
-        ],
-      },
-    )
+    try {
+      return new ImageResponse(
+        <div
+          tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
+          style={{ fontFamily: 'Inter' }}
+        >
+          <p tw={`text-[12rem] ${textColor}`}>{text}</p>
+        </div>,
+        {
+          width,
+          height,
+          format: 'svg',
+          fonts: [
+            {
+              name: 'Inter',
+              weight: 400,
+              data: inter400,
+            },
+          ],
+        },
+      )
+    } catch (err) {
+      // @ts-expect-error asd
+      return ctx.body(err.toString(), 500)
+    }
   },
 )
