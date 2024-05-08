@@ -24,6 +24,8 @@ fontRouter.get(
       const response = ctx.res.clone()
       ctx.executionCtx.waitUntil(cache.put(key, response))
     } else {
+      // eslint-disable-next-line no-console
+      console.info('serving font from cache')
       return new Response(response.body, response)
     }
   },
