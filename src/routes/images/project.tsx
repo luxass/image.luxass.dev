@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font, truncateWords } from '../../utils'
 
 export const projectImageRouter = new Hono<HonoContext>()
@@ -46,18 +46,22 @@ projectImageRouter.get(
       font({
         family: 'Inter',
         weight: 900,
+        HOST: ctx.env.HOST,
       }),
       font({
         family: 'Inter',
         weight: 700,
+        HOST: ctx.env.HOST,
       }),
       font({
         family: 'Inter',
         weight: 400,
+        HOST: ctx.env.HOST,
       }),
     ])
 
     return new ImageResponse(
+      ctx.env,
       <div
         tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white"
         style={{ fontFamily: 'Inter' }}

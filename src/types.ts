@@ -4,6 +4,7 @@ export interface HonoContext {
   Bindings: {
     GITHUB_TOKEN: string
     ENVIRONMENT: string
+    HOST: string
   }
 }
 

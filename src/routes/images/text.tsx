@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font } from '../../utils'
 
 export const textImageRouter = new Hono<HonoContext>()
@@ -37,35 +37,32 @@ textImageRouter.get(
     const inter400 = await font({
       family: 'Inter',
       weight: 400,
+      HOST: ctx.env.HOST,
     })
 
     const bgColor = `bg-${_bgColor}`
     const textColor = `text-${_textColor}`
 
-    try {
-      return new ImageResponse(
-        <div
-          tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
-          style={{ fontFamily: 'Inter' }}
-        >
-          <p tw={`text-[12rem] ${textColor}`}>{text}</p>
-        </div>,
-        {
-          width,
-          height,
-          format: 'svg',
-          fonts: [
-            {
-              name: 'Inter',
-              weight: 400,
-              data: inter400,
-            },
-          ],
-        },
-      )
-    } catch (err) {
-      // @ts-expect-error asd
-      return ctx.body(err.toString(), 500)
-    }
+    return new ImageResponse(
+      ctx.env,
+      <div
+        tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
+        style={{ fontFamily: 'Inter' }}
+      >
+        <p tw={`text-[12rem] ${textColor}`}>{text}</p>
+      </div>,
+      {
+        width,
+        height,
+        format: 'svg',
+        fonts: [
+          {
+            name: 'Inter',
+            weight: 400,
+            data: inter400,
+          },
+        ],
+      },
+    )
   },
 )

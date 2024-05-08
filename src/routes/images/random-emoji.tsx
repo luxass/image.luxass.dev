@@ -3,7 +3,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 import { z } from 'zod'
 import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../og'
+import { ImageResponse } from '../../image-response'
 import { font } from '../../utils'
 
 export const randomEmojiImageRouter = new Hono<HonoContext>()
@@ -53,12 +53,14 @@ randomEmojiImageRouter.get(
     const inter400 = await font({
       family: 'Inter',
       weight: 400,
+      HOST: ctx.env.HOST,
     })
 
     const text = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
     const bg = `bg-${bgColor}`
 
     return new ImageResponse(
+      ctx.env,
       <div
         tw={`${bg} flex h-screen w-screen items-center justify-center p-5 text-center`}
       >

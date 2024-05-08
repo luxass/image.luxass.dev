@@ -5,7 +5,7 @@ import { Resvg, initWasm } from '@resvg/resvg-wasm'
 import resvgWasm from './resvg.wasm'
 // @ts-expect-error .wasm files are not typed
 import yogaWasm from './yoga.wasm'
-import type { ImageResponseOptions } from './types'
+import type { HonoContext, ImageResponseOptions } from './types'
 import { font } from './utils'
 
 async function initResvgWasm() {
@@ -29,9 +29,9 @@ async function initYogaWasm() {
   }
 }
 
-interface Props {
+interface RenderOptions {
   /**
-   * The React element or HTML string to render into an image.
+   * The React element to render into an image.
    * @example
    * ```tsx
    * <div
@@ -52,6 +52,11 @@ interface Props {
    * The options for the image response.
    */
   options: ImageResponseOptions
+
+  /**
+   * The CF env.
+   */
+  env: HonoContext['Bindings']
 }
 
 const apis = {
@@ -100,11 +105,9 @@ function toCodePoint(unicodeSurrogates: string) {
   return r.join('-')
 }
 
-export async function og({ element, options }: Props) {
-  // 1. Init WASMs
+export async function render({ env, element, options }: RenderOptions) {
   await Promise.allSettled([initResvgWasm(), initYogaWasm()])
 
-  // 3. Convert React Element to SVG with Satori
   const width = options.width
   const height = options.height
 
@@ -134,6 +137,7 @@ export async function og({ element, options }: Props) {
             data: await font({
               family: 'Inter',
               weight: 500,
+              HOST: env.HOST,
             }),
             weight: 500,
             style: 'normal',
@@ -154,7 +158,6 @@ export async function og({ element, options }: Props) {
     return svg
   }
 
-  // 4. Convert the SVG into a PNG
   const resvg = new Resvg(svg, {
     fitTo:
       'width' in widthHeight
@@ -172,54 +175,4 @@ export async function og({ element, options }: Props) {
   const pngBuffer = pngData.asPng()
 
   return pngBuffer
-}
-
-export class ImageResponse extends Response {
-  constructor(
-    element: string | React.ReactNode,
-    options: ImageResponseOptions,
-  ) {
-    super()
-
-    if (options.format === 'svg') {
-      return (async () => {
-        const svg = await og({ element, options })
-        return new Response(svg, {
-          headers: {
-            'Content-Type': 'image/svg+xml',
-            'Cache-Control': options.debug
-              ? 'no-cache, no-store'
-              : 'public, immutable, no-transform, max-age=31536000',
-            ...options.headers,
-          },
-          status: options.status || 200,
-          statusText: options.statusText,
-        })
-      })() as unknown as ImageResponse
-    } else {
-      const body = new ReadableStream({
-        async start(controller) {
-          const buffer = await og({
-            element,
-            options,
-          })
-
-          controller.enqueue(buffer)
-          controller.close()
-        },
-      })
-
-      return new Response(body, {
-        headers: {
-          'Content-Type': 'image/png',
-          'Cache-Control': options.debug
-            ? 'no-cache, no-store'
-            : 'public, immutable, no-transform, max-age=31536000',
-          ...options.headers,
-        },
-        status: options.status || 200,
-        statusText: options.statusText,
-      })
-    }
-  }
 }
