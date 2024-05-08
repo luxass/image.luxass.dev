@@ -1,3 +1,4 @@
+import type { FontWeight } from 'satori'
 import { z } from 'zod'
 
 type Primitives = string | number | boolean | null
@@ -38,4 +39,28 @@ export function truncateWords(str: string, maxCharacters: number) {
   const truncated = str.slice(0, maxCharacters)
   const lastSpace = truncated.lastIndexOf(' ')
   return `${truncated.slice(0, lastSpace)}…`
+}
+
+export const FONT_PARAMS = params(
+  z.object({
+    family: z.string(),
+    weight: z.number().default(400),
+    text: z.string().optional(),
+  }),
+)
+
+export interface FontOptions {
+  family: string
+  weight?: FontWeight
+  text?: string
+}
+
+export async function font({ HOST = 'http://localhost:8787', family, weight, text }: FontOptions & {
+  HOST?: string
+}) {
+  const res = await fetch(
+    `${HOST}/api/font/${family}/${weight}${text ? `?text=${text}` : ''}`,
+  )
+
+  return await res.arrayBuffer()
 }
