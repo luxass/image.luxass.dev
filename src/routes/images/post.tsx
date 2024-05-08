@@ -48,22 +48,18 @@ postImageRouter.get(
       font({
         family: 'Inter',
         weight: 900,
-        HOST: ctx.env.HOST,
       }),
       font({
         family: 'Inter',
         weight: 700,
-        HOST: ctx.env.HOST,
       }),
       font({
         family: 'Inter',
         weight: 400,
-        HOST: ctx.env.HOST,
       }),
     ])
 
     return new ImageResponse(
-      ctx.env,
       <div tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white">
         <div tw="flex h-full w-full flex-col justify-between">
           <div tw="flex w-full flex-col">

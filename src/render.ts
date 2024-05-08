@@ -52,11 +52,6 @@ interface RenderOptions {
    * The options for the image response.
    */
   options: ImageResponseOptions
-
-  /**
-   * The CF env.
-   */
-  env: HonoContext['Bindings']
 }
 
 const apis = {
@@ -105,7 +100,7 @@ function toCodePoint(unicodeSurrogates: string) {
   return r.join('-')
 }
 
-export async function render({ env, element, options }: RenderOptions) {
+export async function render({ element, options }: RenderOptions) {
   await Promise.allSettled([initResvgWasm(), initYogaWasm()])
 
   const width = options.width
@@ -137,7 +132,6 @@ export async function render({ env, element, options }: RenderOptions) {
             data: await font({
               family: 'Inter',
               weight: 500,
-              HOST: env.HOST,
             }),
             weight: 500,
             style: 'normal',

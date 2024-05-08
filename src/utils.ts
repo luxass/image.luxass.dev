@@ -55,17 +55,16 @@ export interface FontOptions {
   text?: string
 }
 
-export async function font({ HOST = 'http://localhost:8787', family, weight, text }: FontOptions & {
+export async function font({ family, weight, text }: FontOptions & {
   HOST?: string
 }) {
   console.error({
     family,
     weight,
     text,
-    HOST,
   })
   const res = await fetch(
-    `${HOST}/api/font/${family}/${weight}${text ? `?text=${text}` : ''}`,
+    `https://assets.luxass.dev/api/font/${family}/${weight}${text ? `?text=${text}` : ''}`,
   )
 
   return await res.arrayBuffer()

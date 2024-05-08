@@ -3,7 +3,6 @@ import type { HonoContext, ImageResponseOptions } from './types'
 
 export class ImageResponse extends Response {
   constructor(
-    env: HonoContext['Bindings'],
     element: string | React.ReactNode,
     options: ImageResponseOptions,
   ) {
@@ -11,7 +10,7 @@ export class ImageResponse extends Response {
 
     if (options.format === 'svg') {
       return (async () => {
-        const svg = await render({ env, element, options })
+        const svg = await render({ element, options })
         return new Response(svg, {
           headers: {
             'Content-Type': 'image/svg+xml',
@@ -28,7 +27,6 @@ export class ImageResponse extends Response {
       const body = new ReadableStream({
         async start(controller) {
           const buffer = await render({
-            env,
             element,
             options,
           })

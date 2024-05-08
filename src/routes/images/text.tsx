@@ -38,7 +38,6 @@ textImageRouter.get(
       const inter400 = await font({
         family: 'Inter',
         weight: 400,
-        HOST: ctx.env.HOST,
       })
 
       console.error('font is downloaded')
@@ -47,7 +46,6 @@ textImageRouter.get(
       const textColor = `text-${_textColor}`
 
       return new ImageResponse(
-        ctx.env,
         <div
           tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
           style={{ fontFamily: 'Inter' }}
