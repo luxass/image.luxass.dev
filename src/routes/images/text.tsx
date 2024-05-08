@@ -12,7 +12,7 @@ const schema = z.object({
   width: z.number().min(300).max(600).default(300),
   height: z.number().min(300).max(600).default(300),
   text: z.string().default('LN'),
-  textColor: z.string().default('#4169e1'),
+  textColor: z.string().default('blue-600'),
   bgColor: z.string().default('white'),
 })
 
