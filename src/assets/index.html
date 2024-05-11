@@ -7,33 +7,39 @@
     <link rel="icon" href="/favicon.ico" />
 
     <!-- primary meta tags -->
-    <title>cron job | projectrc.luxass.dev</title>
-    <meta name="title" content="cron job | projectrc.luxass.dev" />
+    <title>image service | {{ ENVIRONMENT }}</title>
+    <meta name="title" content="image service | {{ ENVIRONMENT }}" />
     <meta
       name="description"
-      content="A Cloudflare worker to update my projects"
+      content="A Cloudflare worker to generate OG images"
     />
 
     <!-- open graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="cron.projectrc.luxass.dev" />
-    <meta property="og:url" content="${uurl}" />
-    <meta property="og:title" content="cron job | projectrc.luxass.dev" />
+    <meta
+      property="og:site_name"
+      content="{{ STRINGIFIED_ENVIRONMENT }}image.luxass.dev"
+    />
+    <meta property="og:url" content="{{ URL }}" />
+    <meta property="og:title" content="image service | {{ ENVIRONMENT }}" />
     <meta
       property="og:description"
-      content="A Cloudflare worker to update my projects"
+      content="A Cloudflare worker to generate OG images"
     />
-    <meta property="og:image" content="${ogUrl}" />
+    <meta property="og:image" content="{{ OG_URL }}" />
 
     <!-- twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="${uurl}" />
-    <meta property="twitter:title" content="cron job | projectrc.luxass.dev" />
+    <meta property="twitter:url" content="{{ URL }}" />
+    <meta
+      property="twitter:title"
+      content="image service | {{ ENVIRONMENT }}"
+    />
     <meta
       property="twitter:description"
-      content="A Cloudflare worker to update my projects"
+      content="A Cloudflare worker to generate OG images"
     />
-    <meta property="twitter:image" content="${ogUrl}" />
+    <meta property="twitter:image" content="{{ OG_URL }}" />
     <style>
       *,
       :before,

@@ -3,7 +3,6 @@ import { logger } from 'hono/logger'
 import { prettyJSON } from 'hono/pretty-json'
 import { HTTPException } from 'hono/http-exception'
 import type { HonoContext } from './types'
-// @ts-expect-error no types for html files
 import indexPage from './assets/index.html'
 import { imageRouter } from './routes/images'
 
@@ -14,7 +13,12 @@ app.use(prettyJSON())
 app.route('/api/image', imageRouter)
 
 app.get('/', async (ctx) => {
-  return ctx.html(indexPage)
+  const index = indexPage
+    .replaceAll('{{ ENVIRONMENT }}', ctx.env.ENVIRONMENT)
+    .replaceAll('{{ STRINGIFIED_ENVIRONMENT }}', ctx.env.ENVIRONMENT === 'staging' ? 'staging.' : '')
+    .replaceAll('{{ URL }}', `https://${ctx.env.ENVIRONMENT === 'staging' ? 'staging.' : ''}image.luxass.dev`)
+    .replaceAll('{{ OG_URL }}', `https://image.luxass.dev/api/image/random-emoji`)
+  return ctx.html(index)
 })
 
 app.get('/favicon.ico', async (ctx) => {
