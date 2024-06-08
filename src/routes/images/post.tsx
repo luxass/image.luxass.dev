@@ -90,7 +90,7 @@ postImageRouter.get(
         </div>
       </div>,
       {
-        format: 'svg',
+        format: 'png',
         width: 1200,
         height: 600,
         fonts: [

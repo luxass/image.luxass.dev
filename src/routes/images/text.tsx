@@ -52,7 +52,7 @@ textImageRouter.get(
       {
         width,
         height,
-        format: 'svg',
+        format: 'png',
         fonts: [
           {
             name: 'Inter',

@@ -93,7 +93,7 @@ projectImageRouter.get(
         headers: {
           'Cache-Control': 's-maxage=86400, stale-while-revalidate',
         },
-        format: 'svg',
+        format: 'png',
         width: 1200,
         height: 600,
         fonts: [

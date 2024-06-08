@@ -72,7 +72,7 @@ randomEmojiImageRouter.get(
         width,
         height,
         emoji: 'twemoji',
-        format: 'svg',
+        format: 'png',
         fonts: [
           {
             name: 'Inter',
