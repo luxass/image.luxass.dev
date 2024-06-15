@@ -1,6 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "routes": [
-    { "src": "/.*", "dest": "server.js" }
-  ]
+  "outputDirectory": "public",
+  "functions": {
+    "api/**/*.rs": {
+      "runtime": "vercel-rust@4.0.7"
+    }
+  }
 }

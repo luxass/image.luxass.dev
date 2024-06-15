@@ -2,22 +2,21 @@
   "name": "image.luxass.dev",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.3.0",
   "scripts": {
     "start": "vercel dev",
-    "build": "tsc",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@vercel/og": "^0.6.2",
     "hono": "^4.4.6",
-    "zod": "^3.23.6"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^4.4.2",
-    "eslint": "^9.2.0",
-    "eslint-plugin-format": "^0.1.1",
+    "@luxass/eslint-config": "^4.7.0",
+    "eslint": "^9.5.0",
+    "eslint-plugin-format": "^0.1.2",
     "typescript": "^5.4.5"
   }
 }
