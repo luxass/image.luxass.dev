@@ -5,6 +5,7 @@
   "packageManager": "pnpm@9.0.6",
   "scripts": {
     "start": "vercel dev",
+    "build": "tsc",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
