@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { HTTPException } from 'hono/http-exception'
+import { handle } from 'hono/vercel'
 import { INDEX_PAGE } from './utils'
 
 export interface HonoContext {
@@ -49,4 +50,4 @@ app.notFound(async () => {
   })
 })
 
-export default app
+export default handle(app)
