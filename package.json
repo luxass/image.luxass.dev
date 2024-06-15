@@ -4,8 +4,7 @@
   "private": true,
   "packageManager": "pnpm@9.0.6",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build --mode client && vite build",
+    "start": "vercel dev",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
