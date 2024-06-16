@@ -2,7 +2,7 @@
   "name": "image.luxass.dev",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.3.0",
   "scripts": {
     "dev": "wrangler dev",
     "build": "wrangler deploy --dry-run --outdir=dist",
@@ -11,21 +11,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@resvg/resvg-wasm": "^2.6.2",
+    "@resvg/resvg-wasm": "2.4.0",
     "@vercel/og": "^0.6.2",
-    "hono": "^4.3.2",
+    "hono": "^4.4.6",
     "satori": "^0.10.13",
     "yoga-wasm-web": "^0.3.3",
-    "zod": "^3.23.6"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240502.0",
-    "@luxass/eslint-config": "^4.4.2",
-    "@types/react": "^18.3.1",
-    "eslint": "^9.2.0",
-    "eslint-plugin-format": "^0.1.1",
+    "@cloudflare/workers-types": "^4.20240614.0",
+    "@luxass/eslint-config": "^4.7.0",
+    "@types/react": "^18.3.3",
+    "eslint": "^9.5.0",
+    "eslint-plugin-format": "^0.1.2",
     "react": "^18.3.1",
     "typescript": "^5.4.5",
-    "wrangler": "^3.53.1"
+    "wrangler": "^3.60.3"
   }
 }

@@ -1,66 +1,66 @@
-import * as React from 'react'
-import { Hono } from 'hono'
-import { validator } from 'hono/validator'
-import { z } from 'zod'
-import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../image-response'
-import { font, truncateWords } from '../../utils'
+import * as React from "react";
+import { Hono } from "hono";
+import { validator } from "hono/validator";
+import { z } from "zod";
+import type { HonoContext } from "../../types";
+import { ImageResponse } from "../../image-response";
+import { font, truncateWords } from "../../utils";
 
-export const projectImageRouter = new Hono<HonoContext>()
+export const projectImageRouter = new Hono<HonoContext>();
 
 const schema = z.object({
   repo: z
-    .custom<`${string}/${string}`>((str) => typeof str === 'string' && str.split('/').length === 2),
-  description: z.string().transform((str) => truncateWords(str, 145)).nullable().default('No description'),
-})
+    .custom<`${string}/${string}`>((str) => typeof str === "string" && str.split("/").length === 2),
+  description: z.string().transform((str) => truncateWords(str, 145)).nullable().default("No description"),
+});
 
 projectImageRouter.get(
-  '/',
-  validator('query', (value, ctx) => {
-    const parsed = schema.safeParse(value)
+  "/",
+  validator("query", (value, c) => {
+    const parsed = schema.safeParse(value);
     if (!parsed.success) {
-      return ctx.body(parsed.error.toString(), 400)
+      return c.body(parsed.error.toString(), 400);
     }
-    return parsed.data
+    return parsed.data;
   }),
-  async (ctx) => {
+  async (c) => {
     const {
       repo,
       description,
-    } = ctx.req.valid('query')
+    } = c.req.valid("query");
 
     const data = await fetch(`https://api.github.com/repos/${repo}`, {
       headers: {
-        'authorization': `Bearer ${ctx.env.GITHUB_TOKEN}`,
-        'User-Agent': 'image.luxass.dev',
+        "authorization": `Bearer ${c.env.GITHUB_TOKEN}`,
+        "User-Agent": "image.luxass.dev",
       },
-    }).then((res) => res.json())
+    }).then((res) => res.json());
 
-    if (!data || typeof data !== 'object' || !('stargazers_count' in data) || typeof data?.stargazers_count !== 'number') {
-      return ctx.body('Invalid repo', 400)
+    if (!data || typeof data !== "object" || !("stargazers_count" in data) || typeof data?.stargazers_count !== "number") {
+      return c.body("Invalid repo", 400);
     }
 
-    const stars = new Intl.NumberFormat().format(data.stargazers_count)
+    const stars = new Intl.NumberFormat().format(data.stargazers_count);
 
     const [inter900, inter700, inter400] = await Promise.all([
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 900,
       }),
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 700,
       }),
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 400,
       }),
-    ])
+    ]);
 
     return new ImageResponse(
       <div
         tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white"
-        style={{ fontFamily: 'Inter' }}
+        style={{ fontFamily: "Inter" }}
       >
         <div tw="flex h-full w-full flex-col items-center justify-center gap-y-6">
           <div tw="flex items-center">
@@ -91,17 +91,16 @@ projectImageRouter.get(
       </div>,
       {
         headers: {
-          'Cache-Control': 's-maxage=86400, stale-while-revalidate',
+          "Cache-Control": "s-maxage=86400, stale-while-revalidate",
         },
-        format: 'png',
         width: 1200,
         height: 600,
         fonts: [
-          { name: 'Inter', data: inter900, weight: 900 },
-          { name: 'Inter', data: inter700, weight: 700 },
-          { name: 'Inter', data: inter400, weight: 400 },
+          { name: "Inter", data: inter900, weight: 900 },
+          { name: "Inter", data: inter700, weight: 700 },
+          { name: "Inter", data: inter400, weight: 400 },
         ],
       },
-    )
+    );
   },
-)
+);

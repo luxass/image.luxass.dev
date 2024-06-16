@@ -1,44 +1,44 @@
-import { Hono } from 'hono'
-import type { HonoContext } from '../../types'
-import { textImageRouter } from './text'
-import { randomEmojiImageRouter } from './random-emoji'
-import { projectImageRouter } from './project'
-import { postImageRouter } from './post'
+import { Hono } from "hono";
+import type { HonoContext } from "../../types";
+import { textImageRouter } from "./text";
+import { emojiImageRouter } from "./emoji";
+import { projectImageRouter } from "./project";
+import { postImageRouter } from "./post";
 
-export const imageRouter = new Hono<HonoContext>()
+export const imageRouter = new Hono<HonoContext>();
 
 imageRouter.get(
-  '*',
-  async (ctx, next) => {
-    if (ctx.env.ENVIRONMENT !== 'production' && ctx.env.ENVIRONMENT !== 'staging') {
-      return await next()
+  "*",
+  async (c, next) => {
+    if (c.env.ENVIRONMENT !== "production" && c.env.ENVIRONMENT !== "staging") {
+      return await next();
     }
-    const key = ctx.req.url
-    const cache = await caches.open('og-images')
+    const key = c.req.url;
+    const cache = await caches.open("og-images");
 
-    const response = await cache.match(key)
+    const response = await cache.match(key);
     if (!response) {
       // eslint-disable-next-line no-console
-      console.info('serving image from network')
-      await next()
-      if (!ctx.res.ok) {
-        console.error('failed to fetch image, skipping caching')
-        return
+      console.info("serving image from network");
+      await next();
+      if (!c.res.ok) {
+        console.error("failed to fetch image, skipping caching");
+        return;
       }
 
-      ctx.res.headers.set('Cache-Control', 'public, max-age=3600')
+      c.res.headers.set("Cache-Control", "public, max-age=3600");
 
-      const response = ctx.res.clone()
-      ctx.executionCtx.waitUntil(cache.put(key, response))
+      const response = c.res.clone();
+      c.executionCtx.waitUntil(cache.put(key, response));
     } else {
       // eslint-disable-next-line no-console
-      console.info('serving image from cache')
-      return new Response(response.body, response)
+      console.info("serving image from cache");
+      return new Response(response.body, response);
     }
   },
-)
+);
 
-imageRouter.route('/text', textImageRouter)
-imageRouter.route('/random-emoji', randomEmojiImageRouter)
-imageRouter.route('/project', projectImageRouter)
-imageRouter.route('/post', postImageRouter)
+imageRouter.route("/text", textImageRouter);
+imageRouter.route("/emoji", emojiImageRouter);
+imageRouter.route("/project", projectImageRouter);
+imageRouter.route("/post", postImageRouter);

@@ -6,17 +6,35 @@ import type { HonoContext } from "../../types";
 import { ImageResponse } from "../../image-response";
 import { font } from "../../utils";
 
-export const textImageRouter = new Hono<HonoContext>();
+export const emojiImageRouter = new Hono<HonoContext>();
 
 const schema = z.object({
   width: z.coerce.number().min(300).max(600).default(300),
   height: z.coerce.number().min(300).max(600).default(300),
-  text: z.string().default("LN"),
-  textColor: z.string().default("blue-600"),
   bgColor: z.string().default("white"),
 });
 
-textImageRouter.get(
+const EMOJIS = [
+  "😊",
+  "🚀",
+  "⭐",
+  "🔧",
+  "🎉",
+  "🔍",
+  "📚",
+  "🔥",
+  "👨‍💻",
+  "🔄",
+  "🚦",
+  "🤔",
+  "💡",
+  "👍",
+  "🌍",
+  "💡",
+  "🤖",
+];
+
+emojiImageRouter.get(
   "/",
   validator("query", (value, c) => {
     const parsed = schema.safeParse(value);
@@ -27,11 +45,9 @@ textImageRouter.get(
   }),
   async (c) => {
     const {
-      bgColor: _bgColor,
-      height,
-      text,
-      textColor: _textColor,
+      bgColor,
       width,
+      height,
     } = c.req.valid("query");
 
     const inter400 = await font({
@@ -39,19 +55,23 @@ textImageRouter.get(
       weight: 400,
     });
 
-    const bgColor = `bg-${_bgColor}`;
-    const textColor = `text-${_textColor}`;
+    const text = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    const bg = `bg-${bgColor}`;
 
     return new ImageResponse(
       <div
-        tw={`${bgColor} flex h-screen w-screen items-center justify-center p-5 text-center`}
-        style={{ fontFamily: "Inter" }}
+        tw={`${bg} flex h-screen w-screen items-center justify-center p-5 text-center`}
       >
-        <p tw={`text-[12rem] ${textColor}`}>{text}</p>
+        <p
+          tw="text-[12rem]"
+        >
+          {text}
+        </p>
       </div>,
       {
         width,
         height,
+        emoji: "twemoji",
         fonts: [
           {
             name: "Inter",

@@ -1,63 +1,63 @@
-import * as React from 'react'
-import { Hono } from 'hono'
-import { validator } from 'hono/validator'
-import { z } from 'zod'
-import type { HonoContext } from '../../types'
-import { ImageResponse } from '../../image-response'
-import { font, truncateWords } from '../../utils'
+import * as React from "react";
+import { Hono } from "hono";
+import { validator } from "hono/validator";
+import { z } from "zod";
+import type { HonoContext } from "../../types";
+import { ImageResponse } from "../../image-response";
+import { font, truncateWords } from "../../utils";
 
-export const postImageRouter = new Hono<HonoContext>()
+export const postImageRouter = new Hono<HonoContext>();
 
 const schema = z.object({
   title: z
     .string()
-    .transform((str) => truncateWords(str, 70)).default('No title'),
+    .transform((str) => truncateWords(str, 70)).default("No title"),
   description: z
     .string()
-    .transform((str) => truncateWords(str, 145)).default('No description'),
+    .transform((str) => truncateWords(str, 145)).default("No description"),
   date: z
     .string()
     .default(new Date().toISOString())
     .transform((val) => new Date(val))
     .transform((date) =>
-      Intl.DateTimeFormat('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
+      Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
       }).format(date),
     ),
-})
+});
 
 postImageRouter.get(
-  '/',
-  validator('query', (value, ctx) => {
-    const parsed = schema.safeParse(value)
+  "/",
+  validator("query", (value, c) => {
+    const parsed = schema.safeParse(value);
     if (!parsed.success) {
-      return ctx.body(parsed.error.toString(), 400)
+      return c.body(parsed.error.toString(), 400);
     }
-    return parsed.data
+    return parsed.data;
   }),
-  async (ctx) => {
+  async (c) => {
     const {
       title,
       description,
       date,
-    } = ctx.req.valid('query')
+    } = c.req.valid("query");
 
     const [inter900, inter700, inter400] = await Promise.all([
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 900,
       }),
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 700,
       }),
       font({
-        family: 'Inter',
+        family: "Inter",
         weight: 400,
       }),
-    ])
+    ]);
 
     return new ImageResponse(
       <div tw="flex h-full w-full flex-col bg-neutral-900 bg-cover p-14 text-white">
@@ -90,15 +90,14 @@ postImageRouter.get(
         </div>
       </div>,
       {
-        format: 'png',
         width: 1200,
         height: 600,
         fonts: [
-          { name: 'Inter', data: inter900, weight: 900 },
-          { name: 'Inter', data: inter700, weight: 700 },
-          { name: 'Inter', data: inter400, weight: 400 },
+          { name: "Inter", data: inter900, weight: 900 },
+          { name: "Inter", data: inter700, weight: 700 },
+          { name: "Inter", data: inter400, weight: 400 },
         ],
       },
-    )
+    );
   },
-)
+);
