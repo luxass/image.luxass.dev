@@ -1,30 +1,30 @@
-import type { ImageResponse } from '@vercel/og'
+import type { ImageResponse } from "@vercel/og";
 
 export interface HonoContext {
   Bindings: {
-    GITHUB_TOKEN: string
-    ENVIRONMENT: string
-  }
+    GITHUB_TOKEN: string;
+    ENVIRONMENT: string;
+  };
 }
 
 type VercelImageResponseOptions = NonNullable<
   ConstructorParameters<typeof ImageResponse>[1]
->
+>;
 
 export type ImageResponseOptions = Omit<
   VercelImageResponseOptions,
-  'width' | 'height'
+  "width" | "height"
 > & {
   /**
    * The width of the image. If neither width nor height is provided, the default is 1200.
    *
    * @type {number}
    */
-  width?: number
+  width?: number;
   /**
    * The height of the image. If neither width nor height is provided, the default is 630.
    *
    * @type {number}
    */
-  height?: number
-}
+  height?: number;
+};

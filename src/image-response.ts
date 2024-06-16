@@ -1,12 +1,12 @@
-import { render } from './render'
-import type { ImageResponseOptions } from './types'
+import { render } from "./render";
+import type { ImageResponseOptions } from "./types";
 
 export class ImageResponse extends Response {
   constructor(
     element: string | React.ReactNode,
     options: ImageResponseOptions,
   ) {
-    super()
+    super();
 
     // if (options.format === "svg") {
     //   return (async () => {
@@ -29,24 +29,24 @@ export class ImageResponse extends Response {
         const buffer = await render({
           element,
           options,
-        })
+        });
 
-        controller.enqueue(buffer)
-        controller.close()
+        controller.enqueue(buffer);
+        controller.close();
       },
-    })
+    });
 
     return new Response(body, {
       headers: {
-        'Content-Type': 'image/png',
-        'Cache-Control': options.debug
-          ? 'no-cache, no-store'
-          : 'public, immutable, no-transform, max-age=31536000',
+        "Content-Type": "image/png",
+        "Cache-Control": options.debug
+          ? "no-cache, no-store"
+          : "public, immutable, no-transform, max-age=31536000",
         ...options.headers,
       },
       status: options.status || 200,
       statusText: options.statusText,
-    })
+    });
     // }
   }
 }
