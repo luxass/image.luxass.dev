@@ -21,7 +21,7 @@ app.get("/", async (c) => {
 
 app.get("/favicon.ico", async (c) => {
   // return a random emoji as favicon
-  return c.redirect("/api/image/random-emoji");
+  return c.redirect("/api/image/emoji");
 });
 
 app.get("/view-source", (c) => {
