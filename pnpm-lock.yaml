@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@resvg/resvg-wasm':
-        specifier: 2.4.0
-        version: 2.4.0
+        specifier: 2.4.1
+        version: 2.4.1
       '@vercel/og':
         specifier: ^0.6.2
         version: 0.6.2
@@ -399,6 +399,10 @@ packages:
 
   '@resvg/resvg-wasm@2.4.0':
     resolution: {integrity: sha512-C7c51Nn4yTxXFKvgh2txJFNweaVcfUPQxwEUFw4aWsCmfiBDJsTSwviIF8EcwjQ6k8bPyMWCl1vw4BdxE569Cg==}
+    engines: {node: '>= 10'}
+
+  '@resvg/resvg-wasm@2.4.1':
+    resolution: {integrity: sha512-yi6R0HyHtsoWTRA06Col4WoDs7SvlXU3DLMNP2bdAgs7HK18dTEVl1weXgxRzi8gwLteGUbIg29zulxIB3GSdg==}
     engines: {node: '>= 10'}
 
   '@shuding/opentype.js@1.4.0-beta.0':
@@ -2102,6 +2106,8 @@ snapshots:
   '@pkgr/core@0.1.1': {}
 
   '@resvg/resvg-wasm@2.4.0': {}
+
+  '@resvg/resvg-wasm@2.4.1': {}
 
   '@shuding/opentype.js@1.4.0-beta.0':
     dependencies:
