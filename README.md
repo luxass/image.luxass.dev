@@ -2,7 +2,7 @@
 
 This is the source code for the [image.luxass.dev](https://image.luxass.dev) website.
 
-> [!IMPORTANT
+> [!IMPORTANT]
 > We are moved to a new location: https://github.com/luxass/cloudflare-workers
 
 ## Usage
